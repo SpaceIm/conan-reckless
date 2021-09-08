@@ -47,6 +47,8 @@ class RecklessConan(ConanFile):
             raise ConanInvalidConfiguration("reckless doesn't support clang")
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
             raise ConanInvalidConfiguration("reckless only supports Visual Studio on Windows")
+        if self.settings.compiler == "Visual Studio" and self.options.shared:
+            raise ConanInvalidConfiguration("reckless shared not supported by Visual Studio")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version],
