@@ -43,6 +43,8 @@ class RecklessConan(ConanFile):
             tools.check_min_cppstd(self, 11)
         if self.settings.os not in ["Windows", "Linux"]:
             raise ConanInvalidConfiguration("reckless only supports Windows and Linux")
+        if self.settings.compiler == "clang":
+            raise ConanInvalidConfiguration("reckless doesn't support clang")
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
             raise ConanInvalidConfiguration("reckless only supports Visual Studio on Windows")
 
@@ -73,3 +75,5 @@ class RecklessConan(ConanFile):
         self.cpp_info.libs = ["reckless"]
         if self.settings.os == "Linux":
             self.cpp_info.system_libs.append("pthread")
+        elif self.settings.os == "Windows":
+            self.cpp_info.system_libs.append("synchronization")

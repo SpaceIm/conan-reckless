@@ -1,3 +1,5 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b2ef949..5e50e03 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,8 +1,5 @@
@@ -23,14 +25,17 @@
  
  ################################################################################
  # Build Libraries
-@@ -52,7 +43,19 @@ else()
+@@ -52,7 +43,22 @@ else()
     )
  endif()
  
 -add_library(reckless STATIC ${SRC_LIST})
 +find_package(Threads REQUIRED)
 +add_library(reckless ${SRC_LIST})
-+target_link_libraries(reckless Threads::Threads)
++target_link_libraries(reckless PUBLIC Threads::Threads)
++if(WIN32)
++    target_link_libraries(reckless PRIVATE synchronization)
++endif()
 +set_target_properties(reckless PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 +target_compile_features(reckless PUBLIC cxx_std_11)
 +
