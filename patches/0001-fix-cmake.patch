@@ -45,7 +45,7 @@ index b2ef949..5e50e03 100644
 +    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 +    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 +)
-+install(DIRECTORY reckless/include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
++install(DIRECTORY reckless/include/reckless DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
  
  ################################################################################
  # Build Examples
