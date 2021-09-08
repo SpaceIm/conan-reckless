@@ -43,12 +43,12 @@ class RecklessConan(ConanFile):
             tools.check_min_cppstd(self, 11)
         if self.settings.os not in ["Windows", "Linux"]:
             raise ConanInvalidConfiguration("reckless only supports Windows and Linux")
-        if self.settings.compiler == "clang":
-            raise ConanInvalidConfiguration("reckless doesn't support clang")
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
             raise ConanInvalidConfiguration("reckless only supports Visual Studio on Windows")
         if self.settings.compiler == "Visual Studio" and self.options.shared:
             raise ConanInvalidConfiguration("reckless shared not supported by Visual Studio")
+        if self.settings.compiler == "clang" and self.settings.compiler.get_safe("libcxx") == "libc++":
+            raise ConanInvalidConfiguration("reckless doesn't support clang with libc++")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version],
